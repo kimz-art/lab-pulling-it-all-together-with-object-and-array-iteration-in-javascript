@@ -114,3 +114,65 @@ function gameObject() {
         },
     };
 }
+
+function getAllPlayers() {
+  let game = gameObject();                  
+  let teams = Object.values(game);          
+  let allPlayers = {};                      
+
+  teams.forEach(function(team) {            
+    let teamPlayers = team.players;         
+    Object.assign(allPlayers, teamPlayers); 
+  });
+
+  return allPlayers
+}
+function numPointsScored(playerName) {
+  return Object.entries(getAllPlayers()).find(function(entry) {
+    return entry[0] === playerName;
+  })[1].points;
+}
+function shoeSize(playerName){
+    return Object.entries(getAllPlayers()).find(function(entry){
+       return entry[0]===playerName;
+    })[1].shoe;
+}
+function teamColors(teamName) {
+  return Object.values(gameObject()).find(function(team) {
+    return team.teamName === teamName;
+  }).colors;
+}
+
+function teamNames() {
+  return Object.values(gameObject()).map(function(team) {
+    return team.teamName;
+  });
+}
+
+function playerNumbers(teamName) {
+  const team = Object.values(gameObject()).find(function(team) {
+    return team.teamName === teamName;
+  });
+  return Object.values(team.players).map(function(player) {
+    return player.number;
+  });
+}
+
+function playerStats(playerName) {
+  return Object.entries(getAllPlayers()).find(function(entry) {
+    return entry[0] === playerName;
+  })[1];
+}
+
+function bigShoeRebounds() {
+  let allPlayers = getAllPlayers();
+  let playerList = Object.values(allPlayers);
+  let biggestShoePlayer = playerList.reduce(function(maxPlayer, currentPlayer) {
+    if (currentPlayer.shoe > maxPlayer.shoe) {
+      return currentPlayer;
+    } else {
+      return maxPlayer;
+    }
+  });
+  return biggestShoePlayer.rebounds;
+}
